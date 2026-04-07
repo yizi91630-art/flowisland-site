@@ -22,9 +22,19 @@ navAnchors.forEach((link) => {
     const target = document.querySelector(href);
     if (!target) return;
     event.preventDefault();
-    const headerOffset = 74;
+    const header = document.querySelector(".site-header");
+    const headerOffset = header ? header.offsetHeight : 74;
     const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
     window.scrollTo({ top: targetTop, behavior: "smooth" });
     closeMobileMenu();
   });
+});
+
+document.addEventListener("click", (event) => {
+  if (!navLinks || !menuToggle || window.innerWidth > 760) return;
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  if (!navLinks.contains(target) && !menuToggle.contains(target)) {
+    closeMobileMenu();
+  }
 });
